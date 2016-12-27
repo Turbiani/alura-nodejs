@@ -2,7 +2,7 @@
  * Created by lcunha on 26/12/16.
  */
 module.exports = function(app){
-    app.get('/produtos',function(req,res){
+    var listaProdutos = function(req, res){
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
@@ -11,13 +11,15 @@ module.exports = function(app){
         });
 
         connection.end();
-    });
+    }
+
+    app.get('/produtos', listaProdutos);
 
     app.get('/produtos/form',function(req,res){
         res.render('produtos/form');
     });
 
-    app.post('/produtos/salva',function(req,res){
+    app.post('/produtos',function(req,res){
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
