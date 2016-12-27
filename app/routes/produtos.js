@@ -7,7 +7,7 @@ module.exports = function(app){
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
         produtosDAO.lista(function(err, results){
-            //TRATANDO OS TIPOS DE REQUISICAO ATRAVES DO ACCEPT DO HEADER
+            //TRATANDO OS TIPOS DE RETORNO ATRAVES DO VALOR DO ACCEPT DO HEADER DA REQUEST
             //A FUNCAO FORMAT ME AJUDA COM ESSE TRATAMENTO DIFERENCIADO
             res.format({
                 html: function () {
