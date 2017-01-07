@@ -6,7 +6,7 @@ var request = require('supertest')(express);
 
 describe('#ProdutosController', function(){
     it('#listagem json',function(done){
-        request.get('http://localhost:3000/produtos')
+        request.get('/produtos')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(302, done);
