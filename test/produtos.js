@@ -3,12 +3,15 @@
  */
 var express = require('../config/express')();
 var request = require('supertest')(express);
+var DatabaseCleaner = require('database-cleaner');
 
 describe('#ProdutosController', function(){
 
     beforeEach(function(done){
         var conn = express.infra.connectionFactory();
-        conn.query('delete from livros', function(erro, result){
+        var databaseCleaner = new DatabaseCleaner('mysql');
+
+        databaseCleaner.clean(conn, function(erro, result){
             if(!erro){
                 done();
             }
