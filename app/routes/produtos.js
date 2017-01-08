@@ -33,7 +33,7 @@ module.exports = function(app){
         res.render('produtos/form', {errosValidacao:{}, produto:{}});
     });
 
-    app.post('/produtos',function(req,res){
+    app.post('/produtos',function(req,res, next){
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
@@ -55,7 +55,10 @@ module.exports = function(app){
             return;
         }
 
-        produtosDAO.salva(produto,function(erros,resultados){
+        produtosDAO.salva(produto,function(errors,resultados){
+            if(errors){
+                return next(errors);
+            }
             res.redirect('/produtos');
         });
     });
