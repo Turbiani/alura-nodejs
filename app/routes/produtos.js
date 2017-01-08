@@ -2,12 +2,16 @@
  * Created by lcunha on 26/12/16.
  */
 module.exports = function(app){
-    var listaProdutos = function(req, res){
+    var listaProdutos = function(req, res, next){
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
 
-        produtosDAO.lista(function(err, results){
-            //TRATANDO OS TIPOS DE RETORNO ATRAVES DO VALOR DO ACCEPT DO HEADER DA REQUEST
+        produtosDAO.lista(function(erros, results){
+            if(erros){
+                return next(erros);
+            }
+            //TRATANDO QQUAIS OS TIPOS DE RETORNO DEVO ENVIAR NO RESPONSE
+            // ATRAVES DO VALOR DO ACCEPT DO HEADER DA REQUEST
             //A FUNCAO FORMAT ME AJUDA COM ESSE TRATAMENTO DIFERENCIADO
             res.format({
                 html: function () {
